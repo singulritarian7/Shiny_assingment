@@ -156,10 +156,12 @@ shinyUI(
 ========================================================
 # Based on the selected subset and the carat value a predicted price value is printed in the UI.
 
+r, echo = F
+library(ggplot2)
+data(diamonds)
+fit <- lm(price~carat,data=diamonds)
+unname(predict(fit, data.frame(carat = 3)))
 
-```
-[1] 21012.92
-```
 
 
 ========================================================
@@ -172,16 +174,11 @@ library(curl)
 shinyServer(function(input, output) {
   
   data(diamonds)
-  
-  ## Create a datatable
-  
   output$table <- renderDataTable({
     head(diamonds)
   })
   
   output$distPlot <- renderPlot({
-    
-    # subset the date based on the inputs
     
     diamonds_sub <-
       subset(
@@ -197,8 +194,6 @@ shinyServer(function(input, output) {
       cat("[", x, ", ", y, "]", sep = "")
     })
     
-    # draw the diamonds data and its influence regarding carat and price
-    
     p <-
       ggplot(data = diamonds_sub, aes(x = carat, y = price)) + geom_point()
     p <-
@@ -206,8 +201,6 @@ shinyServer(function(input, output) {
     p <- p + xlim(0, 6) + ylim (0, 20000)
     p
   }, height = 700)
-  
-  # show the price summary
   
   output$summary <- renderPrint({
     diamonds_sub <-
@@ -220,8 +213,6 @@ shinyServer(function(input, output) {
     
     summary(diamonds_sub$price)
   })
-  
-  # create linear model
   
   output$predict <- renderPrint({
     diamonds_sub <-
@@ -236,9 +227,7 @@ shinyServer(function(input, output) {
     
     unname(predict(fit, data.frame(carat = input$lm)))
   })
-  
-  # reset the filtering with the button
-  
+
   observeEvent(input$showall, {
     distPlot <<- NULL
     
@@ -250,8 +239,6 @@ shinyServer(function(input, output) {
       p <- p + xlim(0, 6) + ylim (0, 20000)
       p
     }, height = 700)
-    
-    # show the price summary
     
     output$summary <- renderPrint(summary(diamonds$price))
     
@@ -267,8 +254,6 @@ shinyServer(function(input, output) {
     
   })
   
-  # reapply the filter
-  
   observeEvent(input$appfil, {
     distPlot <<- NULL
     
@@ -283,7 +268,6 @@ shinyServer(function(input, output) {
             clarity == input$clarity
         )
       
-      # draw the diamonds data and its influence regarding carat and price
       p <-
         ggplot(data = diamonds_sub, aes(x = carat, y = price)) + geom_point()
       p <-
@@ -292,8 +276,7 @@ shinyServer(function(input, output) {
       p
     }, height = 700)
     
-    # show the price summary
-    
+
     output$summary <- renderPrint({
       diamonds_sub <-
         subset(
@@ -305,8 +288,6 @@ shinyServer(function(input, output) {
       
       summary(diamonds_sub$price)
     })
-    
-    # create linear model
     
     output$predict <- renderPrint({
       diamonds_sub <-
