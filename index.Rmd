@@ -1,0 +1,52 @@
+---
+title: "Assingment Shiny"
+author: "Beatriz Jiménez Franco"
+date: "14/12/2020"
+output: html_document
+---
+
+---
+title: "ShinyApp "
+author: "Beatriz Jiménez Franco"
+date: "14/12/2020"
+output: ioslides_presentation
+---
+
+## Links
+
+Link to the shinyApp :
+
+<https://spoke.shinyapps.io/Diamonds/>
+
+You can see the U.i and server code files here:
+
+<https://github.com/singulritarian7/Shiny_assingment/blob/gh-pages/Presesntation_diamonds.md>
+
+## Data
+
+
+```{r}
+library(ggplot2)
+head(diamonds)
+
+```
+
+
+
+## Shiny Estructure
+
+In the shinyapp tou can see 4 tabs:
+
+1. Plot with interactive clicks between variables
+2. Interactive table
+3. Data Description
+4. Documentation
+
+## Gadgets
+
+1. Button
+2. Sliders
+3. Input Boxes
+
+## Thank you
+
