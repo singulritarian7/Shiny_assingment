@@ -4,27 +4,25 @@ author: Beatriz Jimenez Franco
 date: 
 autosize: true
 
+I hope you enjoy the presentation!
+
 Introduction
 ========================================================
 
 In this app we study the relationship between two variables, carat and price of the dataset diamonds, that yoy can find loading ggplot2. With a subset of the datframe we can also observe the predicted values of price. Notice that ib the difeerent tabs you can find interactive plots and tables. 
-
 Link to the shinyApp :
 
 <https://spoke.shinyapps.io/Diamonds/>
 
 Link to my presentation in shinyapps.io:
-
 <<https://spoke.shinyapps.io/shiny-presentation/#1>
-
-
-Link to my RPubs presentation:
-
-<https://rpubs.com/spoke/706042>
 
 Link to my Github repository:
 
 <https://github.com/singulritarian7/Shiny_assingment>
+
+Link to my RPubs presentation:
+<https://rpubs.com/spoke/706042>
 
 Data
 ========================================================
