@@ -24,8 +24,7 @@ Link to my RPubs presentation:
 
 Link to my Github repository:
 
-<https://github.com/singulritarian7/Shiny_assingment/blob/gh-pages/Presesntation_diamonds.md>
-
+<https://github.com/singulritarian7/Shiny_assingment>
 
 Data
 ========================================================
@@ -170,16 +169,16 @@ shinyUI(
 <div class="navbar-header">
 <span class="navbar-brand">Shiny Application</span>
 </div>
-<ul class="nav navbar-nav" data-tabsetid="1592">
+<ul class="nav navbar-nav" data-tabsetid="9219">
 <li class="active">
-<a href="#tab-1592-1" data-toggle="tab" data-value="Model">Model</a>
+<a href="#tab-9219-1" data-toggle="tab" data-value="Model">Model</a>
 </li>
 </ul>
 </div>
 </nav>
 <div class="container-fluid">
-<div class="tab-content" data-tabsetid="1592">
-<div class="tab-pane active" data-value="Model" id="tab-1592-1">
+<div class="tab-content" data-tabsetid="9219">
+<div class="tab-pane active" data-value="Model" id="tab-9219-1">
 <div class="container-fluid">
 <h2>Diamonds - Influences on the Carat/Price Relationship</h2>
 <div class="row">
@@ -238,29 +237,29 @@ shinyUI(
 </div>
 <div class="col-sm-8">
 <div class="tabbable">
-<ul class="nav nav-tabs" data-tabsetid="9130">
+<ul class="nav nav-tabs" data-tabsetid="8995">
 <li class="active">
-<a href="#tab-9130-1" data-toggle="tab" data-value="Plot">Plot</a>
+<a href="#tab-8995-1" data-toggle="tab" data-value="Plot">Plot</a>
 </li>
 <li>
-<a href="#tab-9130-2" data-toggle="tab" data-value="Table">Table</a>
+<a href="#tab-8995-2" data-toggle="tab" data-value="Table">Table</a>
 </li>
 <li>
-<a href="#tab-9130-3" data-toggle="tab" data-value="Documentation">Documentation</a>
+<a href="#tab-8995-3" data-toggle="tab" data-value="Documentation">Documentation</a>
 </li>
 <li>
-<a href="#tab-9130-4" data-toggle="tab" data-value="Data Description">Data Description</a>
+<a href="#tab-8995-4" data-toggle="tab" data-value="Data Description">Data Description</a>
 </li>
 </ul>
-<div class="tab-content" data-tabsetid="9130">
-<div class="tab-pane active" data-value="Plot" id="tab-9130-1">
+<div class="tab-content" data-tabsetid="8995">
+<div class="tab-pane active" data-value="Plot" id="tab-8995-1">
 <div id="distPlot" class="shiny-plot-output" style="width: 100% ; height: 400px" data-click-id="plot_click" data-click-clip="TRUE"></div>
 <pre id="info" class="shiny-text-output noplaceholder"></pre>
 </div>
-<div class="tab-pane" data-value="Table" id="tab-9130-2">
+<div class="tab-pane" data-value="Table" id="tab-8995-2">
 <div id="table" class="shiny-datatable-output"></div>
 </div>
-<div class="tab-pane" data-value="Documentation" id="tab-9130-3">
+<div class="tab-pane" data-value="Documentation" id="tab-8995-3">
 <br/>
 <span class="help-block">This app enables you to display various subsets of the diamond data set (as included in the ggplot2 R-package) and check the influence on the
                              carat/price relationship in the data. A basic linear model relationship is displayed based on the selected subset of the data and price prediction
@@ -275,7 +274,7 @@ shinyUI(
 <span class="help-block">Finally a data summary is displayed and a price can be predicted by selecting a subset of the data and choosing a carat value.
                             Simply choose cut, color, clarity and carat as you see fit and a value is predicted based on your selection.</span>
 </div>
-<div class="tab-pane" data-value="Data Description" id="tab-9130-4">
+<div class="tab-pane" data-value="Data Description" id="tab-8995-4">
 <br/>
 <span class="help-block">See data description here:</span>
 <br/>
