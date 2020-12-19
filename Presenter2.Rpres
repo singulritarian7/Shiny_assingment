@@ -1,0 +1,288 @@
+Presentation of the shinyApp
+========================================================
+author: Beatriz Jimenez Franco
+date: 
+autosize: true
+
+Introduction
+========================================================
+
+In this app we study the relationship between two variables, carat and price of the dataset diamonds, that yoy can find loading ggplot2. With a subset of the datframe we can also observe the predicted values of price. Notice that ib the difeerent tabs you can find interactive plots and tables. 
+Link to the shinyApp :
+
+<https://spoke.shinyapps.io/Diamonds/>
+
+Link to my Github repository:
+
+<https://github.com/singulritarian7/Shiny_assingment/blob/gh-pages/Presesntation_diamonds.md>
+
+
+Data
+========================================================
+
+```{r, warning=FALSE, message=FALSE}
+library(shiny)
+library(ggplot2)
+head(diamonds)
+```
+
+U.I Code
+========================================================
+
+```{r}
+library(shiny);library(ggplot2);data("diamonds")
+
+shinyUI(
+    navbarPage("Shiny Application",
+        tabPanel("Model",
+            fluidPage(
+                titlePanel("Diamonds - Influences on the Carat/Price Relationship"),
+                sidebarLayout(
+                    sidebarPanel(
+                    h4("Filter Variables"),
+            
+                        selectInput("cut",   
+                            "Cut",
+                            (sort(
+                            unique(diamonds$cut), decreasing = T
+                        ))),
+            
+                        selectInput("color",
+                            "Color",
+                             (sort(
+                             unique(diamonds$color)
+                        ))),
+            
+                        selectInput("clarity",
+                             "Clarity",
+                             (sort(
+                             unique(diamonds$clarity), decreasing = T
+                        ))),
+            
+                             actionButton("showall",
+                             "Show All"),
+            
+                             actionButton("appfil",
+                             "Filter Mode"),
+            
+                             h4("Price Summary"),
+            
+                             verbatimTextOutput("summary"),
+            
+                             sliderInput(
+                             "lm",
+                             "Carat",
+                              min = min(diamonds$carat),
+                              max = max(diamonds$carat),
+                              value = max(diamonds$carat) / 2,
+                              step = 0.1
+                       ),
+            
+                       h4("Predicted Price"),
+            
+                       verbatimTextOutput("predict"),
+            
+                       width = 4
+        ),
+                   mainPanel(tabsetPanel(
+                       tabPanel("Plot", 
+                          plotOutput("distPlot",click = "plot_click" ),
+                          verbatimTextOutput("info")
+                       ),       
+                       tabPanel("Table", dataTableOutput("table")),
+                       tabPanel(
+                           "Documentation",
+                            br(),
+                
+                            helpText(
+                            "This app enables you to display various subsets of the diamond data set (as included in the ggplot2 R-package) and check the influence on the
+                             carat/price relationship in the data. A basic linear model relationship is displayed based on the selected subset of the data and price prediction
+                            is possible via selecting the respective filter variables and a carat value."
+                   ),
+                
+                           br(),
+                
+                           helpText(
+                           "Furthermore it is possible to remove the filter and display the whole dataset by pressing the button SHOW ALL.
+                            To go back the the filtered view, press FILTER MODE and all your filters are reapplied. Per default, filter
+                            mode is active."
+                ),
+                
+                           br(),
+                
+                           helpText("You can also see the x, y coordenates by clicking the interactive plot."
+                ),
+                
+                           br(),
+                
+                           helpText(
+                           "Finally a data summary is displayed and a price can be predicted by selecting a subset of the data and choosing a carat value.
+                            Simply choose cut, color, clarity and carat as you see fit and a value is predicted based on your selection."
+                )),
+            
+                      tabPanel(
+                           "Data Description",
+                
+                           br(),
+                
+                           helpText("See data description here:"),
+                
+                           br(),
+                
+                           tags$a(
+                           "http://ggplot2.tidyverse.org/reference/diamonds.html",
+                            href = "http://ggplot2.tidyverse.org/reference/diamonds.html"
+                )
+            )
+            
+        ))
+    )
+)
+)))
+
+
+```
+
+Server Code
+========================================================
+
+```{r}
+library(shiny);library(ggplot2);library(tidyverse);
+library(curl)
+
+shinyServer(function(input, output) {
+  data(diamonds)
+
+  output$table <- renderDataTable({
+    head(diamonds)
+  })
+  
+  output$distPlot <- renderPlot({
+    
+    diamonds_sub <-
+      subset(
+        diamonds,
+        cut == input$cut &
+          color == input$color &
+          clarity == input$clarity
+      )
+    output$info <- renderPrint({
+      req(input$plot_click)
+      x <- round(input$plot_click$x, 2)
+      y <- round(input$plot_click$y, 2)
+      cat("[", x, ", ", y, "]", sep = "")
+    })
+    
+    p <-
+      ggplot(data = diamonds_sub, aes(x = carat, y = price)) + geom_point()
+    p <-
+      p + geom_smooth(method = "lm") + xlab("Carat") + ylab("Price")
+    p <- p + xlim(0, 6) + ylim (0, 20000)
+    p
+  }, height = 700)
+  
+  output$summary <- renderPrint({
+    diamonds_sub <-
+      subset(
+        diamonds,
+        cut == input$cut &
+          color == input$color &
+          clarity == input$clarity
+      )
+    
+    summary(diamonds_sub$price)
+  })
+  
+  output$predict <- renderPrint({
+    diamonds_sub <-
+      subset(
+        diamonds,
+        cut == input$cut &
+          color == input$color &
+          clarity == input$clarity
+      )
+    
+    fit <- lm(price~carat,data=diamonds_sub)
+    
+    unname(predict(fit, data.frame(carat = input$lm)))
+  })
+  
+  observeEvent(input$showall, {
+    distPlot <<- NULL
+    
+    output$distPlot <- renderPlot({
+      p <-
+        ggplot(data = diamonds, aes(x = carat, y = price)) + geom_point()
+      p <-
+        p + geom_smooth(method = "lm") + xlab("Carat") + ylab("Price")
+      p <- p + xlim(0, 6) + ylim (0, 20000)
+      p
+    }, height = 700)
+    
+    output$summary <- renderPrint(summary(diamonds$price))
+    
+    output$predict <- renderPrint({
+      
+      fit <- lm(price~carat,data=diamonds)
+      
+      unname(predict(fit, data.frame(carat = input$lm)))
+    })
+    
+    
+  })
+  
+  observeEvent(input$appfil, {
+    distPlot <<- NULL
+    
+    output$distPlot <- renderPlot({
+    
+      diamonds_sub <-
+        subset(
+          diamonds,
+          cut == input$cut &
+            color == input$color &
+            clarity == input$clarity
+        )
+      
+      p <-
+        ggplot(data = diamonds_sub, aes(x = carat, y = price)) + geom_point()
+      p <-
+        p + geom_smooth(method = "lm") + xlab("Carat") + ylab("Price")
+      p <- p + xlim(0, 6) + ylim (0, 20000)
+      p
+    }, height = 700)
+    
+    output$summary <- renderPrint({
+      diamonds_sub <-
+        subset(
+          diamonds,
+          cut == input$cut &
+            color == input$color &
+            clarity == input$clarity
+        )
+      
+      summary(diamonds_sub$price)
+    })
+    
+    output$predict <- renderPrint({
+      diamonds_sub <-
+        subset(
+          diamonds,
+          cut == input$cut &
+            color == input$color &
+            clarity == input$clarity
+        )
+      
+      fit <- lm(price~carat,data=diamonds_sub)
+      
+      unname(predict(fit, data.frame(carat = input$lm)))
+    })
+    
+  })
+  
+})
+```
+
+
+
+
