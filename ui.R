@@ -1,8 +1,5 @@
 library(shiny)
 library(ggplot2)
-
-# load data
-
 data("diamonds")
 
 # Define UI for application that draws a histogram
