@@ -3,8 +3,6 @@ library(ggplot2)
 library(tidyverse)
 library(curl)
 
-### Define server logic
-
 shinyServer(function(input, output) {
   
   ## load the data
