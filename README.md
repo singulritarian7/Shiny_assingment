@@ -5,6 +5,9 @@ This peer assessed assignment has two parts. First, you will create a Shiny appl
 Presentation of the Shiny App here:
 <https://spoke.shinyapps.io/shiny-presentation/#1>
 
+You can also see the shiny presentation in RPUBS:
+<https://rpubs.com/spoke/706042>
+
 Write a shiny application with associated supporting documentation. The documentation should be thought of as whatever a user will need to get started using your application.
 Deploy the application on Rstudio's shiny server
 Share the application link by pasting it into the provided text box
